@@ -304,6 +304,7 @@ return new Block(block.x, block.y)
 })
 newBlocks.forEach(block => {
 // 移動させる場合
+//aaa
 if(moveX || moveY){
 block.x += moveX
 block.y += moveY
