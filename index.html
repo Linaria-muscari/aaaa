@@ -1,43 +1,58 @@
-<!DOCTYPE html>
+[html] <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ビューポート設定を追加 -->
-<title>運勢チェッカー</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テトリス</title>
+<style>
+#container{
+position: relative;
+margin: auto;
+width: 700px;
+}
+#next-canvas{
+position: absolute;
+top: 0;
+left:400px;
+}
+
+#img-howto{
+position: absolute;
+bottom: 200px;
+left: 360px;
+}
+
+#start-btn {
+position: absolute;
+left: 400px;
+bottom: 0;
+width: 180px;
+text-align: center;
+font-size: 16px;
+color: #FFF;
+text-decoration: none;
+font-weight: bold;
+padding: 12px 24px;
+border:none;
+border-radius: 4px;
+background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
+transition: .5s;
+background-size: 200%;
+}
+
+#start-btn:hover {
+background-position: right center;
+}
+</style>
 </head>
-    
 <body>
-    <div class="container">
-        
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="pyscript.html">PyScriptVer</a>
-        <a href="cluster_analysis.html">ClusterAnalysis</a>
-    </nav>
-
-        <br>
-        <label for="colour-select">好きな色を選んでください：</label>
-        <select id="colour-select">
-            <option value="黒">黒</option>
-            <option value="白">白</option>
-            <option value="オレンジ">オレンジ</option>
-        </select>
-        <br>
-        <label for="number-input">好きな数字を選んでください（0、1、2）※半角数値で入力：</label>
-        <input type="number" id="number-input">
-        <br>
-        <button onclick="checkFortune()">運勢をチェック</button>
-        <p id="result-output"></p>
-        
-    <nav>
-     <a href="index.html">Home</a>
-      <a href="pyscript.html">PyScriptVer</a>
-      <a href="cluster_analysis.html">ClusterAnalysis</a>
-    </nav>
-    </div>    
-
-    <script src="app.js"></script>
-
+<div id="container">
+<canvas id="main-canvas"></canvas>
+<canvas id="next-canvas"></canvas>
+<img id="img-howto" src="images/howto.png">
+<button id="start-btn">開始</button>
+</div>
+<script src="tetris.js"></script>
 </body>
 </html>
+[/html]
