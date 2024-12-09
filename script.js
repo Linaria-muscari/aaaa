@@ -100,3 +100,16 @@ function calculateScore(linesCleared) {
   const lineScores = [0, 100, 300, 500, 800];
   return lineScores[linesCleared];
 }
+function isGameOver(board) {
+  return board[0].some(cell => cell !== 0);
+}
+
+function startGame(board) {
+  // ボードと変数を初期化します
+  // ...
+  if (isGameOver(board)) {
+    // ゲームオーバーのメッセージを表示し、ゲームをリセットします
+  } else {
+    // ゲームループを継続します
+  }
+}
