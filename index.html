@@ -1,57 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>テトリス</title>
-<style>
-#container{
-position: relative;
-margin: auto;
-width: 700px;
-}
-#next-canvas{
-position: absolute;
-top: 0;
-left:400px;
-}
-
-#img-howto{
-position: absolute;
-bottom: 200px;
-left: 360px;
-}
-
-#start-btn {
-position: absolute;
-left: 400px;
-bottom: 0;
-width: 180px;
-text-align: center;
-font-size: 16px;
-color: #FFF;
-text-decoration: none;
-font-weight: bold;
-padding: 12px 24px;
-border:none;
-border-radius: 4px;
-background-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%);
-transition: .5s;
-background-size: 200%;
-}
-
-#start-btn:hover {
-background-position: right center;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>JavaScriptでテトリス</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="container">
-<canvas id="main-canvas"></canvas>
-<canvas id="next-canvas"></canvas>
-<img id="img-howto" src="images/howto.png">
-<button type="submit" id="start-btn">開始!</button>
-</div>
-<script src="app.js"></script>
+  <div id="board"></div>
+  <script src="script.js"></script>
 </body>
 </html>
