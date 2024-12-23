@@ -17,6 +17,8 @@
       <canvas id="cvs"></canvas>
     </div>
     <script>
+      //落下サイクル(小さい方が速い)
+      const speed = 300;
       //ブロック1マスの大きさ
       const blockSize = 30;
       //ボードサイズ
@@ -49,6 +51,12 @@
       let offsetX = 0;
       let offsetY = 0;
 
+      //ボード本体
+      const board = [];
+
+      //タイマーID
+      let timerId = NaN;
+
       //描画処理
       const draw = () => {
         //塗りに黒を設定
@@ -56,16 +64,20 @@
         //キャンバスを塗りつぶす
         ctx.fillRect(0, 0, canvasW, canvasH);
 
-        //塗りに赤を設定
-        //ctx.fillStyle = '#ee82ee';
-        //x座標50,y座標50の場所に幅30,縦30の四角を描画
-        //ctx.fillRect(150, 150, blockSize, blockSize);
+        //ボードに存在しているブロックを塗る
+        for (let y = 0; y < boardRow; y++) {
+          for (let x = 0; x < boardCol; x++) {
+            if (board[y][x]) {
+              drawBlock(x, y);
+            }
+          }
+        }
 
         //テトリミノの描画
         for (let y = 0; y < tetSize; y++) {
           for (let x = 0; x < tetSize; x++) {
             if (tet[y][x]) {
-              drawBlock(offsetX+x,offsetY+y);
+              drawBlock(offsetX + x, offsetY + y);
             }
           }
         }
@@ -83,26 +95,98 @@
         ctx.strokeRect(px, py, blockSize, blockSize);
       };
 
+      //指定された方向に移動できるか？(x移動量,y移動量,対象tet)
+      const canMove = (dx, dy, nowTet = tet) => {
+        for (let y = 0; y < tetSize; y++) {
+          for (let x = 0; x < tetSize; x++) {
+            //その場所にブロックがあれば
+            if (nowTet[y][x]) {
+              //ボード座標に変換（offsetX(-2~8)+x(0~3)+移動量(-1~1)
+              let nx = offsetX + x + dx;
+              let ny = offsetY + y + dy;
+              if (
+                //調査する座標がボード外だったらできない
+                ny < 0 ||
+                nx < 0 ||
+                ny >= boardRow ||
+                nx >= boardCol ||
+                //移動したいボード上の場所にすでに存在してたらできない
+                board[ny][nx]
+              ) {
+                //移動できない
+                return false;
+              }
+            }
+          }
+        }
+        //移動できる
+        return true;
+      };
+      //回転
+      const createRotateTet = () => {
+        //新しいtetを作る
+        let newTet = [];
+        for (let y = 0; y < tetSize; y++) {
+          newTet[y] = [];
+          for (let x = 0; x < tetSize; x++) {
+            //時計回りに90度回転させる
+            newTet[y][x] = tet[tetSize - 1 - x][y];
+          }
+        }
+        return newTet;
+      };
+
       document.onkeydown = (e) => {
         switch (e.keyCode) {
           case 37: //左
-            offsetX--;
+            if (canMove(-1, 0)) offsetX--;
             break;
           case 38: //上
-            offsetY--;
+            if (canMove(0, -1)) offsetY--;
             break;
           case 39: //右
-            offsetX++;
+            if (canMove(1, 0)) offsetX++;
             break;
           case 40: //下
-            offsetY++;
+            if (canMove(0, 1)) offsetY++;
             break;
+          case 32: //space
+            let newTet = createRotateTet();
+            if (canMove(0, 0, newTet)) {
+              tet = newTet;
+            }
         }
         draw();
       };
-      //
+      //繰り返し行われる落下処理
+      const dropTet = () => {
+        //下に行けたら
+        if (canMove(0, 1)) {
+          //下に行く
+          offsetY++;
+        } else {
+        }
+        draw();
+      };
+      const initStartPos = () => {
+        offsetX = boardCol / 2 - tetSize / 2;
+        offsetY = 0;
+      };
       //初期化処理
       const init = () => {
+        //ボード(20*10を0埋め)
+        for (let y = 0; y < boardRow; y++) {
+          board[y] = [];
+          for (let x = 0; x < boardCol; x++) {
+            board[y][x] = 0;
+          }
+        }
+        //テスト用
+        //board[3][5]=1;
+        initStartPos();
+        //繰り返し処理
+        timerId=setInterval(dropTet,speed);
+
         draw();
       };
     </script>
