@@ -9,7 +9,3 @@
       //x座標150,y座標150の場所に幅30,縦30の四角を描画
       ctx.fillRect(150,150,blockSize,blockSize);
     }
-    //初期化処理
-    const init=()=>{
-      draw();
-    }
